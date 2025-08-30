@@ -124,50 +124,32 @@ export default function SportChainLanding() {
             </div>
             <span className="text-xl font-bold text-foreground">SportChain</span>
           </div>
+          
 
-          <nav className="hidden md:flex items-center space-x-6">
-            <a href="#projects" className="text-muted-foreground hover:text-foreground transition-colors">
-              Projects
+          <div className="flex items-center gap-4 ml-auto">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20 shadow-sm">
+              <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary text-primary-foreground font-bold text-lg">
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={2} />
+                  <path stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" d="M8 12h8M12 8v8" />
+                </svg>
+              </div>
+              <span className="font-mono text-base md:text-lg font-semibold text-primary">
+                sportchain.eth
+              </span>
+              <span className="ml-2 px-2 py-0.5 rounded bg-green-100 text-green-700 text-xs font-medium">
+                Connected
+              </span>
+            </div>
+            <a className="btn-primary-filled flex items-center gap-2" href="/dashboard">
+              Dashboard
             </a>
-            <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">
-              About
-            </a>
-            <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
-              How It Works
-            </a>
-          </nav>
-          <a className="btn-primary-filled flex items-center gap-2" href="/wallet_connected">
-            Connect Wallet
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+          </div>
+
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
-            Invest in the Future of <span className="text-primary">Sports Infrastructure</span>
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto text-pretty">
-            Tokenize and democratize sports facility ownership. Earn passive income from real-world sports
-            infrastructure through blockchain technology.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="btn-primary-filled flex items-center gap-2">
-              Start Investing
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Button>
-            <Button size="lg" className="btn-secondary-outline">
-              Learn More
-            </Button>
-          </div>
-        </div>
-      </section>
+     
 
       {/* Projects Grid */}
       <section id="projects" className="py-16 px-4">
@@ -203,13 +185,22 @@ export default function SportChainLanding() {
                         <CardTitle className="text-lg font-bold text-card-foreground mb-1">{project.name}</CardTitle>
                         <div className="flex items-center text-sm text-muted-foreground mb-2">
                           <MapPin className="h-4 w-4 mr-1" />
-                          {project.location}
+                          {(() => {
+                            const [city, country] = project.location.split(",").map(s => s.trim());
+                            return (
+                              <>
+                                <span className="font-semibold">{city}</span>
+                                <span className="mx-1 text-muted-foreground">|</span>
+                                <span>{country}</span>
+                              </>
+                            );
+                          })()}
                         </div>
                       </div>
-                      <Badge variant="secondary" className="bg-secondary/20 text-secondary">
-                        {project.type}
-                      </Badge>
                     </div>
+                    <Badge variant="secondary" className="bg-secondary/20 text-secondary">
+                      {project.type}
+                    </Badge>
                     <CardDescription className="text-sm text-muted-foreground">{project.description}</CardDescription>
                   </CardHeader>
 
@@ -252,7 +243,10 @@ export default function SportChainLanding() {
                   </CardContent>
 
                   <CardFooter>
-                    <Button className="w-full btn-primary-outline">View Details</Button>
+                    <div className="flex gap-2 w-full">
+                      <Button className="flex-1 btn-primary-outline">Details</Button>
+                      <Button className="flex-1 btn-primary-filled">Invest</Button>
+                    </div>
                   </CardFooter>
                 </Card>
               )
