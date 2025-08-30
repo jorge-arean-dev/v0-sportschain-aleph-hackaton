@@ -14,6 +14,7 @@ import {
   base,
   lisk,
   liskSepolia,
+  baseSepolia,
 } from 'wagmi/chains';
 import {
   QueryClientProvider,
@@ -22,8 +23,8 @@ import {
 
 const config = getDefaultConfig({
   appName: 'SportChain',
-  projectId: process.env.NEXT_PUBLIC_RAINBOWKIT_PROJECT_ID || '',
-  chains: [lisk, liskSepolia],
+  projectId: process.env.NEXT_PUBLIC_RAINBOWKIT_PROJECT_ID || 'SportChain',
+  chains: [lisk, liskSepolia, baseSepolia],
   ssr: true, // If your dApp uses server side rendering (SSR)
 });
 
