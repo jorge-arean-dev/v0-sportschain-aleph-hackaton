@@ -27,6 +27,7 @@ contract SportsToken is ERC20, ERC20Burnable, ERC20Pausable, AccessControl, ERC2
     uint256 public totalInvested;
     uint256 public totalSold;
     uint256 public supply;
+    string public initialUri;
     SaleStatus public saleStatus;
 
     event TokenPurchased(address indexed buyer, uint256 amount, uint256 totalInvested, uint256 totalSold, uint256 supply, SaleStatus saleStatus);
@@ -37,9 +38,12 @@ contract SportsToken is ERC20, ERC20Burnable, ERC20Pausable, AccessControl, ERC2
         uint256 _unit_price,
         uint256 _supply,
         address _reciever,
-        address _paymentToken
+        address _paymentToken,
+        string memory _name,
+        string memory _symbol,
+        string memory _initial_uri
         )
-        ERC20("MyRWA", "RWA")
+        ERC20(_name, _symbol)
         ERC20Permit("MyRWA")
     {
         _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
@@ -51,7 +55,7 @@ contract SportsToken is ERC20, ERC20Burnable, ERC20Pausable, AccessControl, ERC2
         totalInvested = 0;
         totalSold = 0;
         supply = _supply;
-
+        initialUri = _initial_uri;
         saleStatus = SaleStatus.Active;
     }
 
@@ -66,7 +70,7 @@ contract SportsToken is ERC20, ERC20Burnable, ERC20Pausable, AccessControl, ERC2
     function invest(uint256 amount) public whenNotPaused {
         require(amount != 0, "Invalid amount");
         require(saleStatus == SaleStatus.Active, "Sale not active");
-        require(sportsChain.isWhitelisted(msg.sender), "Not whitelisted");
+        require(SportsChain(sportsChain).isWhitelisted(msg.sender), "Not whitelisted");
         require(paymentToken.transferFrom(msg.sender, address(this), amount * unitPrice), "Transfer failed");
         
         if(amount + totalSold > supply) {
@@ -82,6 +86,22 @@ contract SportsToken is ERC20, ERC20Burnable, ERC20Pausable, AccessControl, ERC2
         }
 
         emit TokenPurchased(msg.sender, amount, totalInvested, totalSold, supply, saleStatus);
+    }
+
+    struct Data {
+        string name;
+        string symbol;
+        string initialUri;
+        uint256 unitPrice;
+        uint256 totalInvested;
+        uint256 totalSold;
+        uint256 supply;
+        SaleStatus saleStatus;
+    }
+
+    function getData() public view returns (Data memory) {
+        Data memory data = Data(name(), symbol(), initialUri, unitPrice, totalInvested, totalSold, supply, saleStatus);
+        return data;
     }
 
     // The following functions are overrides required by Solidity.

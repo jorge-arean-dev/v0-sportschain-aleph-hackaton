@@ -29,7 +29,10 @@ contract SportsChain is AccessControl {
     function deploySportsToken(
         uint256 _unitPrice,
         uint256 _supply,
-        address _reciever
+        address _reciever,
+        string calldata _name,
+        string calldata _symbol,
+        string calldata _initial_uri
     ) public onlyRole(ADMIN_ROLE) returns (address) {
         SportsToken sportsToken = new SportsToken(
             msg.sender,
@@ -37,7 +40,10 @@ contract SportsChain is AccessControl {
             _unitPrice,
             _supply,
             _reciever,
-            address(paymentToken)
+            address(paymentToken),
+            _name,
+            _symbol,
+            _initial_uri
         );
 
         sportsTokens.push(address(sportsToken));
