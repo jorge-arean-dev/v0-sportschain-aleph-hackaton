@@ -124,10 +124,11 @@ export default function SportChainLanding() {
                             {project.location}
                           </div>
                         </div>
-                        <Badge variant="secondary" className="bg-secondary/20 text-secondary">
+                        
+                      </div>
+                      <Badge variant="secondary" className="bg-secondary/20 text-secondary">
                           {project.type}
                         </Badge>
-                      </div>
                       <CardDescription className="text-sm text-muted-foreground">{project.description}</CardDescription>
                     </CardHeader>
 
