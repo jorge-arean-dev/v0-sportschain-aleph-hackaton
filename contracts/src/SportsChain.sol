@@ -29,6 +29,7 @@ contract SportsChain is AccessControl {
     function deploySportsToken(
         uint256 _unitPrice,
         uint256 _supply,
+        uint256 _minimumInvestment,
         address _reciever,
         string calldata _name,
         string calldata _symbol,
@@ -39,6 +40,7 @@ contract SportsChain is AccessControl {
             msg.sender,
             _unitPrice,
             _supply,
+            _minimumInvestment,
             _reciever,
             address(paymentToken),
             _name,

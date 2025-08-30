@@ -29,6 +29,7 @@ contract SportsToken is ERC20, ERC20Burnable, ERC20Pausable, AccessControl, ERC2
     uint256 public supply;
     string public initialUri;
     SaleStatus public saleStatus;
+    uint256 public minimumInvestment;
 
     event TokenPurchased(address indexed buyer, uint256 amount, uint256 totalInvested, uint256 totalSold, uint256 supply, SaleStatus saleStatus);
 
@@ -37,6 +38,7 @@ contract SportsToken is ERC20, ERC20Burnable, ERC20Pausable, AccessControl, ERC2
         address pauser,
         uint256 _unit_price,
         uint256 _supply,
+        uint256 _minimumInvestment,
         address _reciever,
         address _paymentToken,
         string memory _name,
@@ -69,10 +71,10 @@ contract SportsToken is ERC20, ERC20Burnable, ERC20Pausable, AccessControl, ERC2
 
     function invest(uint256 amount) public whenNotPaused {
         require(amount != 0, "Invalid amount");
+        require(amount >= minimumInvestment, "Investment below minimum");
         require(saleStatus == SaleStatus.Active, "Sale not active");
         require(SportsChain(sportsChain).isWhitelisted(msg.sender), "Not whitelisted");
         require(paymentToken.transferFrom(msg.sender, address(this), amount * unitPrice), "Transfer failed");
-        
         if(amount + totalSold > supply) {
             amount = supply - totalSold;
         }

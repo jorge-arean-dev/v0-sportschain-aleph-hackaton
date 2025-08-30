@@ -20,4 +20,4 @@ contract SportsChainScript is Script {
         vm.stopBroadcast();
     }
 }
-}
+

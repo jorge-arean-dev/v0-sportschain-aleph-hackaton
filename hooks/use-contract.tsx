@@ -179,8 +179,7 @@ export function useContract(): UseContractReturn {
     return useReadContract({
       address: SPORTS_CHAIN_ADDRESS,
       abi: SportsChainABI.abi,
-      functionName: "getSportsTokens",
-      args: [0], // Get first token, you might want to iterate
+      functionName: "getSportsTokens"
     });
   };
 

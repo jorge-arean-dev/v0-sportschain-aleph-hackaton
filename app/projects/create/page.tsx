@@ -6,23 +6,35 @@ import { Badge } from "@/components/ui/badge"
 import { MapPin, TrendingUp, Users, Calendar, Building2, DollarSign, Target, Percent } from "lucide-react"
 import Link from 'next/link'
 import { useState } from 'react'
+import { usePinata } from "@/hooks/use-pinata"
+import { useSportsChain } from "@/hooks/use-contract"
+import { useAccount } from "wagmi"
 
 export default function CreateProject() {
   const [formData, setFormData] = useState({
     name: '',
+    symbol: '',
     type: '',
     country: '',
     city: '',
     targetFunding: '',
     irrExpected: '',
     roiExpected: '',
-    tokenNumber: '',
-    tokenValue: '',
+    tokenSupply: '',
+    minimumInvestment: '',
     description: '',
     longDescription: '',
-    image: ''
   })
+  
+  const { address } = useAccount()
 
+  // Separate state for the file
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const { uploadJson, uploadFile, fileUpload, jsonUpload } = usePinata()
+  const { deploySportsToken } = useSportsChain()
+  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({
@@ -31,11 +43,86 @@ export default function CreateProject() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Separate handler for file input
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setSelectedFile(file)
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    if (!address) {
+      alert('Please connect your wallet')
+      return
+    }
+
     e.preventDefault()
-    console.log('Form submitted:', formData)
-    // Here you would typically send the data to your API
-    alert('Project created successfully!')
+    setIsSubmitting(true)
+
+    try {
+      if (!selectedFile) {
+        alert('Please upload an image')
+        return
+      }
+
+      // First upload the file to get the IPFS hash
+      const imageCid = await uploadFile(selectedFile)
+      if (!imageCid) {
+        alert('Failed to upload image')
+        return
+      }
+
+      // Then create the JSON data with the image CID
+      const jsonData = {
+        ...formData,
+        image: imageCid, // Use the IPFS hash instead of the file
+        description: formData.description,
+        longDescription: formData.longDescription
+      }
+
+      // Upload the JSON metadata
+      const metadataCid = await uploadJson(jsonData)
+      if (!metadataCid) {
+        alert('Failed to upload project metadata')
+        return
+      }
+
+      deploySportsToken({
+        unitPrice: formData.targetFunding,
+        supply: formData.tokenSupply,
+        receiver: address,
+        name: formData.name,
+        symbol: formData.symbol,
+        initialUri: metadataCid
+      })
+
+      console.log('Project created with metadata CID:', metadataCid)
+      alert('Project created successfully!')
+      
+      // Reset form
+      setFormData({
+        name: '',
+        symbol: '',
+        type: '',
+        country: '',
+        city: '',
+        targetFunding: '',
+        irrExpected: '',
+        roiExpected: '',
+        tokenSupply: '',
+        minimumInvestment: '',
+        description: '',
+        longDescription: '',
+      })
+      setSelectedFile(null)
+      
+    } catch (error) {
+      console.error('Error creating project:', error)
+      alert('Failed to create project. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -45,7 +132,6 @@ export default function CreateProject() {
           <h1 className="text-3xl font-bold text-foreground mb-2">Create New Project</h1>
           <p className="text-muted-foreground">Launch your sports infrastructure investment opportunity</p>
         </div>
-
         <form onSubmit={handleSubmit}>
           <Card className="max-w-4xl mx-auto">
             <CardHeader>
@@ -67,6 +153,18 @@ export default function CreateProject() {
                     onChange={handleInputChange}
                     className="w-full mt-1 px-3 py-2 border border-border rounded-md bg-background"
                     placeholder="Enter project name"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Project Symbol *</label>
+                  <input 
+                    type="text" 
+                    name="symbol"
+                    value={formData.symbol}
+                    onChange={handleInputChange}
+                    className="w-full mt-1 px-3 py-2 border border-border rounded-md bg-background"
+                    placeholder="Enter project symbol"
                     required
                   />
                 </div>
@@ -174,11 +272,11 @@ export default function CreateProject() {
               {/* Token Information */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium">Token Number</label>
+                  <label className="text-sm font-medium">Token Supply</label>
                   <input 
                     type="number" 
-                    name="tokenNumber"
-                    value={formData.tokenNumber}
+                    name="tokenSupply"
+                    value={formData.tokenSupply}
                     onChange={handleInputChange}
                     className="w-full mt-1 px-3 py-2 border border-border rounded-md bg-background"
                     placeholder="0"
@@ -186,13 +284,13 @@ export default function CreateProject() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium">Token Value</label>
+                  <label className="text-sm font-medium">Minimum Investment</label>
                   <div className="relative mt-1">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <input 
                       type="number" 
-                      name="tokenValue"
-                      value={formData.tokenValue}
+                      name="minimumInvestment"
+                      value={formData.minimumInvestment}
                       onChange={handleInputChange}
                       className="w-full pl-10 pr-3 py-2 border border-border rounded-md bg-background"
                       placeholder="0.00"
@@ -228,22 +326,36 @@ export default function CreateProject() {
                 />
               </div>
 
-              {/* Image URL */}
+              {/* Image Upload */}
               <div>
-                <label className="text-sm font-medium">Project Image URL</label>
+                <label className="text-sm font-medium">Project Image *</label>
                 <input 
-                  type="url" 
-                  name="image"
-                  value={formData.image}
-                  onChange={handleInputChange}
+                  type="file" 
+                  accept="image/*"
+                  onChange={handleFileChange}
                   className="w-full mt-1 px-3 py-2 border border-border rounded-md bg-background"
-                  placeholder="https://example.com/image.jpg"
+                  required
                 />
+                {selectedFile && (
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Selected: {selectedFile.name}
+                  </p>
+                )}
+                {fileUpload.loading && (
+                  <p className="text-sm text-blue-600 mt-1">Uploading image...</p>
+                )}
+                {fileUpload.error && (
+                  <p className="text-sm text-red-600 mt-1">Error: {fileUpload.error}</p>
+                )}
               </div>
 
               <div className="flex gap-4 pt-4">
-                <Button type="submit" className="flex-1">
-                  Create Project
+                <Button 
+                  type="submit" 
+                  className="flex-1"
+                  disabled={isSubmitting || fileUpload.loading || jsonUpload.loading}
+                >
+                  {isSubmitting ? 'Creating Project...' : 'Create Project'}
                 </Button>
                 <Button type="button" variant="outline" className="flex-1">
                   Save Draft
