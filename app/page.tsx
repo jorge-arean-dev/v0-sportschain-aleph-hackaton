@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { MapPin, TrendingUp, Users, Calendar } from "lucide-react"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
 
 // Mock project data
 const projects = [
@@ -155,13 +156,7 @@ export default function SportChainLanding() {
               </a>
             </nav>
 
-
-            <a className="btn-primary-filled flex items-center gap-2" href="/wallet_connected">
-            Connect Wallet
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-            </a>
+            <ConnectButton />
           </div>
         </header>
 
