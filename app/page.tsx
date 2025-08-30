@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
@@ -5,11 +6,14 @@ import { Badge } from "@/components/ui/badge"
 import { MapPin, TrendingUp, Users, Calendar } from "lucide-react"
 import { getAllProjects, calculateFundingProgress, formatCurrency } from '@/lib/utils/projects'
 import Link from 'next/link'
+import { useAccount } from "wagmi"
 
 // Get all projects from the data source
 const projects = getAllProjects()
 
 export default function SportChainLanding() {
+  const {isConnected} = useAccount()
+
   return (
     <div className="min-h-screen bg-background text-foreground relative">
       <video
@@ -31,7 +35,7 @@ export default function SportChainLanding() {
 
       <div className="relative z-20">
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {!isConnected && <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
           <div className="container mx-auto text-center px-4">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
               Invest in the Future of <span className="text-primary">Sports Infrastructure</span>
@@ -52,7 +56,7 @@ export default function SportChainLanding() {
               </Button>
             </div>
           </div>
-        </section>
+        </section>}
 
         {/* Projects Grid */}
         <section id="projects" className="py-16 px-4">
