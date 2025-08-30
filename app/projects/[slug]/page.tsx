@@ -1,0 +1,323 @@
+import { notFound } from 'next/navigation'
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Progress } from "@/components/ui/progress"
+import { 
+  MapPin, 
+  TrendingUp, 
+  Users, 
+  Calendar, 
+  DollarSign, 
+  Building2, 
+  Car,
+  Lightbulb,
+  Thermometer,
+  BarChart3,
+  ArrowLeft
+} from "lucide-react"
+import { getProjectBySlug, calculateFundingProgress, formatCurrency, formatPercentage } from '@/lib/utils/projects'
+import Link from 'next/link'
+
+interface ProjectPageProps {
+  params: {
+    slug: string
+  }
+}
+
+export default function ProjectPage({ params }: ProjectPageProps) {
+  const project = getProjectBySlug(params.slug)
+
+  if (!project) {
+    notFound()
+  }
+
+  const fundingProgress = calculateFundingProgress(project)
+
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Header */}
+      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto flex h-16 items-center justify-between px-4">
+          <div className="flex items-center space-x-2">
+            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
+              <span className="text-primary-foreground font-bold text-lg">S</span>
+            </div>
+            <span className="text-xl font-bold text-foreground">SportChain</span>
+          </div>
+          
+          <div className="flex items-center gap-4">
+            <Link href="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Projects
+            </Link>
+            <Link href="/wallet_connected">
+              <Button variant="outline">Connect Wallet</Button>
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      <div className="container mx-auto px-4 py-8">
+        {/* Project Header */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <Badge variant="secondary" className="bg-secondary/20 text-secondary">
+              {project.type}
+            </Badge>
+            <Badge 
+              variant={project.status === 'Active' ? 'default' : project.status === 'Funding' ? 'secondary' : 'outline'}
+              className="capitalize"
+            >
+              {project.status}
+            </Badge>
+          </div>
+          <h1 className="text-4xl font-bold text-foreground mb-2">{project.name}</h1>
+          <div className="flex items-center text-muted-foreground mb-4">
+            <MapPin className="h-4 w-4 mr-2" />
+            {project.location}
+          </div>
+          <p className="text-lg text-muted-foreground max-w-3xl">{project.longDescription}</p>
+        </div>
+
+        {/* Project Image and Key Stats */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+          {/* Main Image */}
+          <div className="lg:col-span-2">
+            <div className="aspect-video overflow-hidden rounded-lg">
+              <img
+                src={project.image}
+                alt={project.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Key Stats */}
+          <div className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Investment Details</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-muted-foreground">Target Funding</span>
+                  <span className="font-semibold">{formatCurrency(project.targetFunding)}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-muted-foreground">Current Funding</span>
+                  <span className="font-semibold">{formatCurrency(project.currentFunding)}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-muted-foreground">Min Investment</span>
+                  <span className="font-semibold">{formatCurrency(project.minInvestment)}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-muted-foreground">Expected ROI</span>
+                  <span className="font-semibold text-green-600">{formatPercentage(project.expectedROI)}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-muted-foreground">Expected IRR</span>
+                  <span className="font-semibold text-green-600">{formatPercentage(project.expectedIRR)}</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            {project.status === 'Funding' && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Funding Progress</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Progress</span>
+                      <span className="font-medium">{Math.round(fundingProgress)}%</span>
+                    </div>
+                    <Progress value={fundingProgress} className="h-2" />
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>{formatCurrency(project.currentFunding)}</span>
+                      <span>{formatCurrency(project.targetFunding)}</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            <Button className="w-full" size="lg">
+              Invest Now
+            </Button>
+          </div>
+        </div>
+
+        {/* Project Details Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          {/* Facility Details */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Building2 className="h-5 w-5" />
+                Facility Details
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {project.facilityDetails.courts && (
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Courts</span>
+                  <span className="font-medium">{project.facilityDetails.courts}</span>
+                </div>
+              )}
+              {project.facilityDetails.fields && (
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Fields</span>
+                  <span className="font-medium">{project.facilityDetails.fields}</span>
+                </div>
+              )}
+              {project.facilityDetails.tennisCourts && (
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Tennis Courts</span>
+                  <span className="font-medium">{project.facilityDetails.tennisCourts}</span>
+                </div>
+              )}
+              {project.facilityDetails.padelCourts && (
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Padel Courts</span>
+                  <span className="font-medium">{project.facilityDetails.padelCourts}</span>
+                </div>
+              )}
+              {project.facilityDetails.soccerFields && (
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Soccer Fields</span>
+                  <span className="font-medium">{project.facilityDetails.soccerFields}</span>
+                </div>
+              )}
+              {project.facilityDetails.basketballCourts && (
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Basketball Courts</span>
+                  <span className="font-medium">{project.facilityDetails.basketballCourts}</span>
+                </div>
+              )}
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Surface Type</span>
+                <span className="font-medium">{project.facilityDetails.surfaceType}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Lighting</span>
+                <span className="font-medium">{project.facilityDetails.lighting}</span>
+              </div>
+              {project.facilityDetails.climateControl !== undefined && (
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Climate Control</span>
+                  <span className="font-medium">{project.facilityDetails.climateControl ? 'Yes' : 'No'}</span>
+                </div>
+              )}
+              {project.facilityDetails.seatingCapacity && (
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Seating Capacity</span>
+                  <span className="font-medium">{project.facilityDetails.seatingCapacity.toLocaleString()}</span>
+                </div>
+              )}
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Parking Spaces</span>
+                <span className="font-medium">{project.facilityDetails.parkingSpaces}</span>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Financial Metrics */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5" />
+                Financial Metrics
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {project.financialMetrics.monthlyRevenue ? (
+                <>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Monthly Revenue</span>
+                    <span className="font-medium">{formatCurrency(project.financialMetrics.monthlyRevenue)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Operating Costs</span>
+                    <span className="font-medium">{formatCurrency(project.financialMetrics.operatingCosts!)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Net Profit</span>
+                    <span className="font-medium text-green-600">{formatCurrency(project.financialMetrics.netProfit!)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Debt to Equity</span>
+                    <span className="font-medium">{project.financialMetrics.debtToEquity}</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Projected Monthly Revenue</span>
+                    <span className="font-medium">{formatCurrency(project.financialMetrics.projectedMonthlyRevenue!)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Projected Operating Costs</span>
+                    <span className="font-medium">{formatCurrency(project.financialMetrics.projectedOperatingCosts!)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Projected Net Profit</span>
+                    <span className="font-medium text-green-600">{formatCurrency(project.financialMetrics.projectedNetProfit!)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Projected Debt to Equity</span>
+                    <span className="font-medium">{project.financialMetrics.projectedDebtToEquity}</span>
+                  </div>
+                </>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Gallery */}
+        {project.gallery.length > 1 && (
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle>Gallery</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {project.gallery.map((image, index) => (
+                  <div key={index} className="aspect-video overflow-hidden rounded-lg">
+                    <img
+                      src={image}
+                      alt={`${project.name} - Image ${index + 1}`}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Investment CTA */}
+        <Card className="text-center">
+          <CardHeader>
+            <CardTitle className="text-2xl">Ready to Invest?</CardTitle>
+            <CardDescription>
+              Join the future of sports infrastructure investment
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" className="btn-primary-filled">
+                Invest Now
+              </Button>
+              <Button size="lg" variant="outline">
+                Learn More
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}

@@ -5,113 +5,11 @@ import { Badge } from "@/components/ui/badge"
 import { MapPin, TrendingUp, Users, Calendar } from "lucide-react"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 
-// Mock project data
-const projects = [
-  {
-    id: 1,
-    name: "Elite Padel Club Lima",
-    type: "Padel Courts",
-    location: "Lima, Peru",
-    targetFunding: 150000,
-    currentFunding: 127500,
-    expectedROI: 12.5,
-    minInvestment: 500,
-    deadline: "30 days left",
-    description: "Premium padel facility with 6 courts in central Lima",
-    image: "/modern-padel-courts-facility.png",
-  },
-  {
-    id: 2,
-    name: "Buenos Aires Tennis Academy",
-    type: "Tennis Courts",
-    location: "Buenos Aires, Argentina",
-    targetFunding: 200000,
-    currentFunding: 156000,
-    expectedROI: 15.2,
-    minInvestment: 750,
-    deadline: "45 days left",
-    description: "Professional tennis training center with 8 clay courts",
-    image: "/professional-tennis-courts-academy.png",
-  },
-  {
-    id: 3,
-    name: "Montevideo Soccer Complex",
-    type: "Soccer Fields",
-    location: "Montevideo, Uruguay",
-    targetFunding: 300000,
-    currentFunding: 195000,
-    expectedROI: 18.7,
-    minInvestment: 1000,
-    deadline: "22 days left",
-    description: "Multi-purpose soccer facility with 3 full-size pitches",
-    image: "/modern-soccer-football-complex-fields.png",
-  },
-  {
-    id: 4,
-    name: "Bogota Multisport Hub",
-    type: "Multisport Club",
-    location: "Bogota, Colombia",
-    targetFunding: 250000,
-    currentFunding: 187500,
-    expectedROI: 16.8,
-    minInvestment: 800,
-    deadline: "38 days left",
-    description: "Complete sports complex with tennis, padel, and fitness",
-    image: "/multisport-complex-facility-modern.png",
-  },
-  {
-    id: 5,
-    name: "Quito Padel Center",
-    type: "Padel Courts",
-    location: "Quito, Ecuador",
-    targetFunding: 120000,
-    currentFunding: 84000,
-    expectedROI: 14.3,
-    minInvestment: 400,
-    deadline: "52 days left",
-    description: "Indoor padel facility with 4 premium courts",
-    image: "/indoor-padel-courts-center-modern.png",
-  },
-  {
-    id: 6,
-    name: "Mexico DF Tennis Resort",
-    type: "Tennis Courts",
-    location: "Mexico DF, Mexico",
-    targetFunding: 180000,
-    currentFunding: 108000,
-    expectedROI: 13.9,
-    minInvestment: 600,
-    deadline: "41 days left",
-    description: "Luxury tennis resort with 6 courts and clubhouse",
-    image: "/luxury-tennis-resort-courts-clubhouse.png",
-  },
-  {
-    id: 7,
-    name: "Lima Soccer Academy",
-    type: "Soccer Fields",
-    location: "Lima, Peru",
-    targetFunding: 220000,
-    currentFunding: 154000,
-    expectedROI: 17.1,
-    minInvestment: 700,
-    deadline: "29 days left",
-    description: "Youth soccer training facility with 2 regulation fields",
-    image: "/youth-soccer-academy-training-fields.png",
-  },
-  {
-    id: 8,
-    name: "Buenos Aires Sports Complex",
-    type: "Multisport Club",
-    location: "Buenos Aires, Argentina",
-    targetFunding: 280000,
-    currentFunding: 168000,
-    expectedROI: 19.2,
-    minInvestment: 900,
-    deadline: "35 days left",
-    description: "Comprehensive sports facility with multiple disciplines",
-    image: "/comprehensive-sports-complex-multiple-disciplines.png",
-  },
-]
+import { getAllProjects, calculateFundingProgress, formatCurrency } from '@/lib/utils/projects'
+import Link from 'next/link'
+
+// Get all projects from the data source
+const projects = getAllProjects()
 
 export default function SportChainLanding() {
   return (
@@ -193,11 +91,11 @@ export default function SportChainLanding() {
                 Discover premium sports facilities ready for tokenized investment
               </p>
             </div>
-
+            
             {/* 2x4 Grid Layout */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {projects.map((project) => {
-                const fundingProgress = (project.currentFunding / project.targetFunding) * 100
+                const fundingProgress = calculateFundingProgress(project)
 
                 return (
                   <Card
@@ -221,10 +119,11 @@ export default function SportChainLanding() {
                             {project.location}
                           </div>
                         </div>
-                        <Badge variant="secondary" className="bg-secondary/20 text-secondary">
+                        
+                      </div>
+                      <Badge variant="secondary" className="bg-secondary/20 text-secondary">
                           {project.type}
                         </Badge>
-                      </div>
                       <CardDescription className="text-sm text-muted-foreground">{project.description}</CardDescription>
                     </CardHeader>
 
@@ -237,8 +136,8 @@ export default function SportChainLanding() {
                         </div>
                         <Progress value={fundingProgress} className="h-2" />
                         <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                          <span>€{project.currentFunding.toLocaleString()}</span>
-                          <span>€{project.targetFunding.toLocaleString()}</span>
+                          <span>{formatCurrency(project.currentFunding)}</span>
+                          <span>{formatCurrency(project.targetFunding)}</span>
                         </div>
                       </div>
 
@@ -255,19 +154,21 @@ export default function SportChainLanding() {
                           <Users className="h-4 w-4 text-secondary mr-2" />
                           <div>
                             <div className="text-muted-foreground">Min. Investment</div>
-                            <div className="font-semibold">€{project.minInvestment}</div>
+                            <div className="font-semibold">{formatCurrency(project.minInvestment)}</div>
                           </div>
                         </div>
                       </div>
 
                       <div className="flex items-center text-sm text-muted-foreground">
                         <Calendar className="h-4 w-4 mr-2" />
-                        {project.deadline}
+                        {project.deadline || 'Coming Soon'}
                       </div>
                     </CardContent>
 
                     <CardFooter>
-                      <Button className="w-full btn-primary-outline">View Details</Button>
+                      <Link href={`/projects/${project.slug}`} className="w-full">
+                        <Button className="w-full btn-primary-outline">View Details</Button>
+                      </Link>
                     </CardFooter>
                   </Card>
                 )
