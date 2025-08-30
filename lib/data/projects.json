@@ -1,0 +1,297 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "slug": "elite-padel-club-lima",
+      "name": "Elite Padel Club Lima",
+      "type": "Padel Courts",
+      "location": "Lima, Peru",
+      "targetFunding": 150000,
+      "currentFunding": 150000,
+      "expectedROI": 30,
+      "expectedIRR": 25,
+      "minInvestment": 500,
+      "description": "Premium padel facility with 6 courts in central Lima",
+      "longDescription": "Elite Padel Club Lima is a state-of-the-art padel facility located in the heart of Lima, Peru. The facility features 6 premium padel courts with advanced lighting systems, climate control, and professional-grade surfaces. The club includes modern amenities such as locker rooms, a pro shop, and a café area for players and spectators.",
+      "image": "/modern-padel-courts-facility.png",
+      "gallery": [
+        "/modern-padel-courts-facility.png",
+        "/indoor-padel-courts-center-modern.png"
+      ],
+      "status": "Active",
+      "startDate": "2025-01-01",
+      "initialInvestment": 2500,
+      "payoutsReceived": 1458,
+      "claimable": 1458,
+      "currentROI": -41.66,
+      "currentIRR": 31.25,
+      "tokenNumber": 25,
+      "takenValue": 100,
+      "facilityDetails": {
+        "courts": 6,
+        "surfaceType": "Artificial Grass",
+        "lighting": "LED Professional",
+        "climateControl": true,
+        "parkingSpaces": 50
+      },
+      "financialMetrics": {
+        "monthlyRevenue": 45000,
+        "operatingCosts": 28000,
+        "netProfit": 17000,
+        "debtToEquity": 0.3
+      }
+    },
+    {
+      "id": 2,
+      "slug": "buenos-aires-tennis-academy",
+      "name": "Buenos Aires Tennis Academy",
+      "type": "Tennis Courts",
+      "location": "Buenos Aires, Argentina",
+      "targetFunding": 200000,
+      "currentFunding": 156000,
+      "expectedROI": 15.2,
+      "expectedIRR": 15,
+      "minInvestment": 750,
+      "description": "Professional tennis training center with 8 clay courts",
+      "longDescription": "Buenos Aires Tennis Academy is a premier tennis training facility featuring 8 professional clay courts. The academy offers comprehensive training programs for all skill levels, from beginners to professional players. The facility includes a fitness center, pro shop, and restaurant.",
+      "image": "/professional-tennis-courts-academy.png",
+      "gallery": [
+        "/professional-tennis-courts-academy.png",
+        "/luxury-tennis-resort-courts-clubhouse.png"
+      ],
+      "status": "Active",
+      "initialInvestment": 3000,
+      "payoutsReceived": 228.00,
+      "claimable": 0,
+      "currentROI": 15.2,
+      "currentIRR": 0,
+      "tokenNumber": 30,
+      "takenValue": 100,
+      "facilityDetails": {
+        "courts": 8,
+        "surfaceType": "Clay",
+        "lighting": "Professional LED",
+        "climateControl": false,
+        "parkingSpaces": 80
+      },
+      "financialMetrics": {
+        "monthlyRevenue": 65000,
+        "operatingCosts": 42000,
+        "netProfit": 23000,
+        "debtToEquity": 0.25
+      }
+    },
+    {
+      "id": 3,
+      "slug": "montevideo-soccer-complex",
+      "name": "Montevideo Soccer Complex",
+      "type": "Soccer Fields",
+      "location": "Montevideo, Uruguay",
+      "targetFunding": 300000,
+      "currentFunding": 195000,
+      "expectedROI": 18.7,
+      "expectedIRR": 22,
+      "minInvestment": 1000,
+      "description": "Multi-purpose soccer facility with 3 full-size pitches",
+      "longDescription": "Montevideo Soccer Complex is a world-class soccer facility featuring 3 full-size regulation pitches with natural grass, professional lighting, and spectator seating. The complex includes training facilities, locker rooms, and a sports medicine center.",
+      "image": "/modern-soccer-football-complex-fields.png",
+      "gallery": [
+        "/modern-soccer-football-complex-fields.png",
+        "/youth-soccer-academy-training-fields.png"
+      ],
+      "status": "Funding",
+      "deadline": "22 days left",
+      "facilityDetails": {
+        "fields": 3,
+        "surfaceType": "Natural Grass",
+        "lighting": "Professional Stadium",
+        "seatingCapacity": 5000,
+        "parkingSpaces": 200
+      },
+      "financialMetrics": {
+        "projectedMonthlyRevenue": 85000,
+        "projectedOperatingCosts": 52000,
+        "projectedNetProfit": 33000,
+        "projectedDebtToEquity": 0.35
+      }
+    },
+    {
+      "id": 4,
+      "slug": "bogota-multisport-hub",
+      "name": "Bogota Multisport Hub",
+      "type": "Multisport Club",
+      "location": "Bogota, Colombia",
+      "targetFunding": 250000,
+      "currentFunding": 187500,
+      "expectedROI": 16.8,
+      "expectedIRR": 18,
+      "minInvestment": 800,
+      "description": "Complete sports complex with tennis, padel, and fitness",
+      "longDescription": "Bogota Multisport Hub is a comprehensive sports facility offering tennis courts, padel courts, a fitness center, and swimming pool. The hub serves as a community center for sports enthusiasts of all ages and skill levels.",
+      "image": "/multisport-complex-facility-modern.png",
+      "gallery": [
+        "/multisport-complex-facility-modern.png",
+        "/comprehensive-sports-complex-multiple-disciplines.png"
+      ],
+      "status": "Funding",
+      "deadline": "38 days left",
+      "facilityDetails": {
+        "tennisCourts": 4,
+        "padelCourts": 2,
+        "fitnessCenter": true,
+        "swimmingPool": true,
+        "parkingSpaces": 120
+      },
+      "financialMetrics": {
+        "projectedMonthlyRevenue": 72000,
+        "projectedOperatingCosts": 45000,
+        "projectedNetProfit": 27000,
+        "projectedDebtToEquity": 0.28
+      }
+    },
+    {
+      "id": 5,
+      "slug": "quito-padel-center",
+      "name": "Quito Padel Center",
+      "type": "Padel Courts",
+      "location": "Quito, Ecuador",
+      "targetFunding": 120000,
+      "currentFunding": 84000,
+      "expectedROI": 14.3,
+      "expectedIRR": 16,
+      "minInvestment": 400,
+      "description": "Indoor padel facility with 4 premium courts",
+      "longDescription": "Quito Padel Center is an indoor padel facility featuring 4 premium courts with climate control and professional lighting. The center offers training programs, tournaments, and social events for the local padel community.",
+      "image": "/indoor-padel-courts-center-modern.png",
+      "gallery": [
+        "/indoor-padel-courts-center-modern.png",
+        "/modern-padel-courts-facility.png"
+      ],
+      "status": "Funding",
+      "deadline": "52 days left",
+      "facilityDetails": {
+        "courts": 4,
+        "surfaceType": "Artificial Grass",
+        "lighting": "LED Professional",
+        "climateControl": true,
+        "parkingSpaces": 40
+      },
+      "financialMetrics": {
+        "projectedMonthlyRevenue": 38000,
+        "projectedOperatingCosts": 24000,
+        "projectedNetProfit": 14000,
+        "projectedDebtToEquity": 0.32
+      }
+    },
+    {
+      "id": 6,
+      "slug": "mexico-df-tennis-resort",
+      "name": "Mexico DF Tennis Resort",
+      "type": "Tennis Courts",
+      "location": "Mexico DF, Mexico",
+      "targetFunding": 180000,
+      "currentFunding": 108000,
+      "expectedROI": 13.9,
+      "expectedIRR": 15,
+      "minInvestment": 600,
+      "description": "Luxury tennis resort with 6 courts and clubhouse",
+      "longDescription": "Mexico DF Tennis Resort is a luxury tennis facility featuring 6 professional courts, a clubhouse with dining facilities, and premium amenities. The resort offers tennis programs, tournaments, and social events in an elegant setting.",
+      "image": "/luxury-tennis-resort-courts-clubhouse.png",
+      "gallery": [
+        "/luxury-tennis-resort-courts-clubhouse.png",
+        "/professional-tennis-courts-academy.png"
+      ],
+      "status": "Funding",
+      "deadline": "41 days left",
+      "facilityDetails": {
+        "courts": 6,
+        "surfaceType": "Hard Court",
+        "lighting": "Professional LED",
+        "climateControl": true,
+        "parkingSpaces": 100
+      },
+      "financialMetrics": {
+        "projectedMonthlyRevenue": 55000,
+        "projectedOperatingCosts": 35000,
+        "projectedNetProfit": 20000,
+        "projectedDebtToEquity": 0.30
+      }
+    },
+    {
+      "id": 7,
+      "slug": "lima-soccer-academy",
+      "name": "Lima Soccer Academy",
+      "type": "Soccer Fields",
+      "location": "Lima, Peru",
+      "targetFunding": 220000,
+      "currentFunding": 154000,
+      "expectedROI": 17.1,
+      "expectedIRR": 19,
+      "minInvestment": 700,
+      "description": "Youth soccer training facility with 2 regulation fields",
+      "longDescription": "Lima Soccer Academy is a youth-focused soccer training facility with 2 regulation fields, training areas, and educational facilities. The academy provides comprehensive soccer education for young players aged 6-18.",
+      "image": "/youth-soccer-academy-training-fields.png",
+      "gallery": [
+        "/youth-soccer-academy-training-fields.png",
+        "/modern-soccer-football-complex-fields.png"
+      ],
+      "status": "Funding",
+      "deadline": "29 days left",
+      "facilityDetails": {
+        "fields": 2,
+        "surfaceType": "Natural Grass",
+        "lighting": "Professional",
+        "trainingAreas": 3,
+        "parkingSpaces": 80
+      },
+      "financialMetrics": {
+        "projectedMonthlyRevenue": 68000,
+        "projectedOperatingCosts": 42000,
+        "projectedNetProfit": 26000,
+        "projectedDebtToEquity": 0.33
+      }
+    },
+    {
+      "id": 8,
+      "slug": "buenos-aires-sports-complex",
+      "name": "Buenos Aires Sports Complex",
+      "type": "Multisport Club",
+      "location": "Buenos Aires, Argentina",
+      "targetFunding": 280000,
+      "currentFunding": 168000,
+      "expectedROI": 19.2,
+      "expectedIRR": 25,
+      "minInvestment": 900,
+      "description": "Comprehensive sports facility with multiple disciplines",
+      "longDescription": "Buenos Aires Sports Complex is a state-of-the-art multisport facility offering tennis, padel, soccer, basketball, and fitness facilities. The complex serves as a community hub for sports and recreation.",
+      "image": "/comprehensive-sports-complex-multiple-disciplines.png",
+      "gallery": [
+        "/comprehensive-sports-complex-multiple-disciplines.png",
+        "/multisport-complex-facility-modern.png"
+      ],
+      "status": "Funding",
+      "deadline": "35 days left",
+      "initialInvestment": 1800,
+      "payoutsReceived": 0,
+      "claimable": 0,
+      "currentROI": 0,
+      "currentIRR": 0,
+      "tokenNumber": 18,
+      "takenValue": 100,
+      "facilityDetails": {
+        "tennisCourts": 6,
+        "padelCourts": 4,
+        "soccerFields": 2,
+        "basketballCourts": 3,
+        "fitnessCenter": true,
+        "parkingSpaces": 150
+      },
+      "financialMetrics": {
+        "projectedMonthlyRevenue": 95000,
+        "projectedOperatingCosts": 58000,
+        "projectedNetProfit": 37000,
+        "projectedDebtToEquity": 0.35
+      }
+    }
+  ]
+}
