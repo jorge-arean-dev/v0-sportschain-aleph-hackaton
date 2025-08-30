@@ -22,7 +22,7 @@ import {
 
 const config = getDefaultConfig({
   appName: 'SportChain',
-  projectId: 'YOUR_PROJECT_ID',
+  projectId: process.env.NEXT_PUBLIC_RAINBOWKIT_PROJECT_ID || '',
   chains: [lisk, liskSepolia],
   ssr: true, // If your dApp uses server side rendering (SSR)
 });
