@@ -4,44 +4,45 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Updated to new SportChain color palette with dark green-black background and neon green accents */
+  /* Updated to new SportChain color palette with #1cf62e green and #0099cd blue */
   --background: #0a0f0d;
   --foreground: #d1d5db;
   --card: #0a0f0d;
   --card-foreground: #d1d5db;
   --popover: #0a0f0d;
   --popover-foreground: #d1d5db;
-  --primary: #00ffaa;
+  --primary: #1cf62e;
   --primary-foreground: #ffffff;
-  --secondary: #1eff9c;
+  /* Secondary color now blue #0099cd */
+  --secondary: #0099cd;
   --secondary-foreground: #ffffff;
   --muted: #0a0f0d;
   --muted-foreground: #9ca3af;
-  --accent: #00ffaa;
+  --accent: #1cf62e;
   --accent-foreground: #ffffff;
   --destructive: #ff4d4d;
   --destructive-foreground: #ffffff;
-  --border: #1eff9c;
+  --border: #0099cd;
   --input: #0a0f0d;
-  --ring: #00ffaa;
-  --chart-1: #00ffaa;
-  --chart-2: #1eff9c;
+  --ring: #1cf62e;
+  --chart-1: #1cf62e;
+  --chart-2: #0099cd;
   --chart-3: #6366f1;
   --chart-4: #ff4d4d;
   --chart-5: #f15a24;
   --radius: 0.5rem;
   --sidebar: #0a0f0d;
   --sidebar-foreground: #d1d5db;
-  --sidebar-primary: #00ffaa;
+  --sidebar-primary: #1cf62e;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #1eff9c;
+  --sidebar-accent: #0099cd;
   --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #1eff9c;
-  --sidebar-ring: #00ffaa;
+  --sidebar-border: #0099cd;
+  --sidebar-ring: #1cf62e;
   /* Added custom SportChain specific color tokens */
   --sportchain-bg: #0a0f0d;
-  --sportchain-accent: #00ffaa;
-  --sportchain-accent-light: #1eff9c;
+  --sportchain-accent: #1cf62e;
+  --sportchain-accent-light: #0099cd;
   --sportchain-text: #d1d5db;
   --sportchain-text-dim: #9ca3af;
   --sportchain-badge: #f15a24;
@@ -56,32 +57,33 @@
   --card-foreground: #d1d5db;
   --popover: #0a0f0d;
   --popover-foreground: #d1d5db;
-  --primary: #00ffaa;
+  --primary: #1cf62e;
   --primary-foreground: #ffffff;
-  --secondary: #1eff9c;
+  /* Secondary color now blue #0099cd */
+  --secondary: #0099cd;
   --secondary-foreground: #ffffff;
   --muted: #0a0f0d;
   --muted-foreground: #9ca3af;
-  --accent: #00ffaa;
+  --accent: #1cf62e;
   --accent-foreground: #ffffff;
   --destructive: #ff4d4d;
   --destructive-foreground: #ffffff;
-  --border: #1eff9c;
+  --border: #0099cd;
   --input: #0a0f0d;
-  --ring: #00ffaa;
-  --chart-1: #00ffaa;
-  --chart-2: #1eff9c;
+  --ring: #1cf62e;
+  --chart-1: #1cf62e;
+  --chart-2: #0099cd;
   --chart-3: #6366f1;
   --chart-4: #ff4d4d;
   --chart-5: #f15a24;
   --sidebar: #0a0f0d;
   --sidebar-foreground: #d1d5db;
-  --sidebar-primary: #00ffaa;
+  --sidebar-primary: #1cf62e;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #1eff9c;
+  --sidebar-accent: #0099cd;
   --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #1eff9c;
-  --sidebar-ring: #00ffaa;
+  --sidebar-border: #0099cd;
+  --sidebar-ring: #1cf62e;
 }
 
 @theme inline {
@@ -145,52 +147,52 @@
 /* Added custom utility classes for SportChain glow effects and gradients */
 @layer utilities {
   .glow-green {
-    box-shadow: 0 0 20px rgba(0, 255, 170, 0.3), 0 0 40px rgba(0, 255, 170, 0.1);
+    box-shadow: 0 0 20px rgba(28, 246, 46, 0.3), 0 0 40px rgba(28, 246, 46, 0.1);
   }
 
   .glow-green-strong {
-    box-shadow: 0 0 30px rgba(0, 255, 170, 0.5), 0 0 60px rgba(0, 255, 170, 0.2);
+    box-shadow: 0 0 30px rgba(28, 246, 46, 0.5), 0 0 60px rgba(28, 246, 46, 0.2);
   }
 
   .aurora-gradient {
-    background: linear-gradient(135deg, #00ffaa 0%, #1eff9c 50%, #b1ffd6 100%);
+    background: linear-gradient(135deg, #1cf62e 0%, #0099cd 50%, #b1ffd6 100%);
   }
 
   .text-glow {
-    text-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+    text-shadow: 0 0 10px rgba(28, 246, 46, 0.5);
   }
 
   /* Added custom button styles for SportChain design system */
   .btn-primary-outline {
     @apply rounded-full border-2 border-primary bg-transparent px-6 py-3 font-bold text-primary transition-all duration-300 hover:bg-primary/10;
-    box-shadow: 0 0 15px rgba(0, 255, 170, 0.2);
+    box-shadow: 0 0 15px rgba(28, 246, 46, 0.2);
   }
 
   .btn-primary-filled {
     @apply rounded-full px-6 py-3 font-bold text-white transition-all duration-300;
-    background: linear-gradient(135deg, rgba(0, 255, 170, 0.8) 0%, rgba(30, 255, 156, 0.8) 100%);
-    box-shadow: 0 0 20px rgba(0, 255, 170, 0.3);
+    background: linear-gradient(135deg, rgba(28, 246, 46, 0.8) 0%, rgba(0, 153, 205, 0.8) 100%);
+    box-shadow: 0 0 20px rgba(28, 246, 46, 0.3);
   }
 
   .btn-primary-filled:hover {
-    background: linear-gradient(135deg, rgba(0, 255, 170, 0.9) 0%, rgba(30, 255, 156, 0.9) 100%);
-    box-shadow: 0 0 25px rgba(0, 255, 170, 0.4);
+    background: linear-gradient(135deg, rgba(28, 246, 46, 0.9) 0%, rgba(0, 153, 205, 0.9) 100%);
+    box-shadow: 0 0 25px rgba(28, 246, 46, 0.4);
     transform: translateY(-1px);
   }
 
   .btn-secondary-outline {
-    @apply rounded-full border border-border bg-transparent px-6 py-3 font-bold text-foreground transition-all duration-300 hover:bg-accent/5;
+    @apply rounded-full border border-border bg-transparent px-6 py-3 font-bold text-secondary transition-all duration-300 hover:bg-secondary/10;
   }
 
   .btn-promotional {
     @apply rounded-lg border-2 border-primary px-6 py-3 font-bold text-white transition-all duration-300;
-    background: linear-gradient(135deg, rgba(0, 255, 170, 0.8) 0%, rgba(30, 255, 156, 0.8) 100%);
-    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1), 0 0 20px rgba(0, 255, 170, 0.3);
+    background: linear-gradient(135deg, rgba(28, 246, 46, 0.8) 0%, rgba(0, 153, 205, 0.8) 100%);
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1), 0 0 20px rgba(28, 246, 46, 0.3);
   }
 
   .btn-promotional:hover {
-    background: linear-gradient(135deg, rgba(0, 255, 170, 0.9) 0%, rgba(30, 255, 156, 0.9) 100%);
-    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.2), 0 0 30px rgba(0, 255, 170, 0.4);
+    background: linear-gradient(135deg, rgba(28, 246, 46, 0.9) 0%, rgba(0, 153, 205, 0.9) 100%);
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.2), 0 0 30px rgba(28, 246, 46, 0.4);
   }
 
   .btn-tertiary-link {

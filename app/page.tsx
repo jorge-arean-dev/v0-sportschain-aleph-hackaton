@@ -37,23 +37,25 @@ export default function SportChainLanding() {
         {/* Hero Section */}
         {!isConnected && <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
           <div className="container mx-auto text-center px-4">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
-              Invest in the Future of <span className="text-primary">Sports Infrastructure</span>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-balance text-primary">
+              SportChain
             </h1>
+            <h3 className="text-2xl md:text-3xl font-bold mb-6 text-balance">
+              Invest in the Future of <span className="text-primary">Sports Infrastructure</span>
+            </h3>
             <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto text-pretty">
               Tokenize and democratize sports facility ownership. Earn passive income from real-world sports
               infrastructure through blockchain technology.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="btn-primary-filled flex items-center gap-2">
-                Start Investing
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Button>
-              <Button size="lg" className="btn-secondary-outline">
-                Learn More
-              </Button>
+              <a href="#projects">
+                <Button size="lg" className="btn-primary-filled flex items-center gap-2">
+                  Start Investing
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Button>
+              </a>
             </div>
           </div>
         </section>}
@@ -122,8 +124,8 @@ export default function SportChainLanding() {
                         <div className="flex items-center">
                           <TrendingUp className="h-4 w-4 text-primary mr-2" />
                           <div>
-                            <div className="text-muted-foreground">Expected ROI</div>
-                            <div className="font-semibold text-primary">{project.expectedROI}%</div>
+                            <div className="text-muted-foreground">Expected IRR</div>
+                            <div className="font-semibold text-primary">{project.expectedIRR}%</div>
                           </div>
                         </div>
                         <div className="flex items-center">
@@ -135,15 +137,16 @@ export default function SportChainLanding() {
                         </div>
                       </div>
 
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Calendar className="h-4 w-4 mr-2" />
-                        {project.deadline || 'Coming Soon'}
-                      </div>
+                      
                     </CardContent>
 
                     <CardFooter>
-                      <Link href={`/projects/${project.slug}`} className="w-full">
-                        <Button className="w-full btn-primary-outline">View Details</Button>
+                      <Link
+                        href={`/projects/${project.slug}`}
+                        className="w-full btn-primary-outline text-center hover:cursor-pointer"
+                        style={{ cursor: "pointer" }}
+                        >
+                        View Details
                       </Link>
                     </CardFooter>
                   </Card>
@@ -151,22 +154,7 @@ export default function SportChainLanding() {
               })}
             </div>
           </div>
-        </section>
-
-        {/* Footer */}
-        <footer className="border-t border-border py-12 px-4 mt-20">
-          <div className="container mx-auto text-center">
-            <div className="flex items-center justify-center space-x-2 mb-4">
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">S</span>
-              </div>
-              <span className="text-xl font-bold text-foreground">SportChain</span>
-            </div>
-            <p className="text-muted-foreground">
-              Democratizing sports infrastructure investment through blockchain technology
-            </p>
-          </div>
-        </footer>
+        </section>        
       </div>
     </div>
   )
