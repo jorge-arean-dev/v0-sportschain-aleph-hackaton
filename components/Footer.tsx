@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <>
       {/* Footer */}
-      <footer className="border-t border-border py-12 px-4 mt-20">
+      <footer className="relative z-30 border-t border-border py-12 px-4 mt-20 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto text-center">
           <div className="flex items-center justify-center space-x-2 mb-4">
             <div className="h-8 w-8 rounded-lg flex items-center justify-center">

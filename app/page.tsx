@@ -15,7 +15,7 @@ export default function SportChainLanding() {
   const {isConnected} = useAccount()
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative">
+    <div className="bg-background text-foreground relative">
       <video
         autoPlay
         loop
@@ -35,9 +35,9 @@ export default function SportChainLanding() {
 
       <div className="relative z-20">
         {/* Hero Section */}
-        {!isConnected && <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {!isConnected && <section className="min-h-screen flex items-center justify-center overflow-hidden">
           <div className="container mx-auto text-center px-4">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-balance text-primary">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-balance text-primary">
               SportChain
             </h1>
             <h3 className="text-2xl md:text-3xl font-bold mb-6 text-balance">
@@ -61,7 +61,7 @@ export default function SportChainLanding() {
         </section>}
 
         {/* Projects Grid */}
-        <section id="projects" className="py-16 px-4">
+        <section id="projects" className="py-16 px-4 mb-20">
           <div className="container mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Investment Opportunities</h2>
@@ -78,7 +78,7 @@ export default function SportChainLanding() {
                 return (
                   <Card
                     key={project.id}
-                    className="bg-card border-border/20 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 group"
+                    className="bg-card border-border/20 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 group pt-0 pb-10"
                   >
                     <div className="aspect-video overflow-hidden rounded-t-lg">
                       <img
@@ -88,7 +88,7 @@ export default function SportChainLanding() {
                       />
                     </div>
 
-                    <CardHeader className="pb-3">
+                    <CardHeader className="pb-3 pt-0">
                       <div className="flex items-start justify-between">
                         <div>
                           <CardTitle className="text-lg font-bold text-card-foreground mb-1">{project.name}</CardTitle>
