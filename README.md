@@ -25,6 +25,17 @@ SportChain is a decentralized platform that enables fractional ownership of spor
 - **🌐 IPFS Integration**: Decentralized metadata storage
 - **📊 Real-time Analytics**: Investment performance and portfolio tracking
 
+## 💻 Hackathon Tracks
+- **v0 by Vercel**: Use of V0 for initial frontend layout
+- **Lisk**: Compatible with Lisk Ecosystem, solving real problems with a long-term potential.
+- **ENS**: Ethereum-Aligned , solving an specific Latin American problem.
+
+## 💻 Hackers
+- **Alexis Jankowski**: Web 3 Developer, Full Stack Developer
+- **Beatriz Gonzales**: AI, Marketing, Editing, Sales
+- **Daniel Lanao**: Tech Leader, Web2 Dev, PM , Founder
+- **Jorge Arean**: Tech Manager, Operations, AI, Product Engineer
+
 ## 🚀 Live Demo
 
 **Project URL**: [https://vercel.com/jorge-arean-devs-projects/v0-sportschain-aleph-hackaton](https://vercel.com/jorge-arean-devs-projects/v0-sportschain-aleph-hackaton)
@@ -35,7 +46,7 @@ SportChain is a decentralized platform that enables fractional ownership of spor
 - **Next.js 15** - React framework with App Router
 - **TypeScript** - Type-safe development
 - **Tailwind CSS** - Utility-first CSS framework
-- **Wagmi + Viem** - Ethereum wallet integration
+- **Wagmi + Viem** - Ethereum wallet integration - Lisk tested
 - **RainbowKit** - Wallet connection UI
 
 ### Smart Contracts
@@ -63,8 +74,8 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/sportchain-aleph-hackathon.git
-cd sportchain-aleph-hackathon
+git clone https://github.com/jorge-arean-dev/v0-sportschain-aleph-hackaton.git
+cd v0-sportschain-aleph-hackaton
 ```
 
 ### 2. Install Dependencies
@@ -112,17 +123,7 @@ forge build
 forge script script/SportsChain.s.sol --rpc-url $SEPOLIA_RPC_URL --broadcast
 ```
 
-### 5. Generate Favicons
-
-```bash
-# Install Sharp for image processing
-npm install sharp
-
-# Generate favicon files
-node generate-favicons.js
-```
-
-### 6. Start Development Server
+### 5. Start Development Server
 
 ```bash
 # Return to root directory
@@ -242,18 +243,24 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **GitHub Issues**: [Report bugs or request features](https://github.com/your-username/sportchain-aleph-hackathon/issues)
-- **Documentation**: [Project Wiki](https://github.com/your-username/sportchain-aleph-hackathon/wiki)
-- **Discord**: Join our community server
+- **GitHub Issues**: [Report bugs or request features](https://github.com/jorge-arean-dev/v0-sportschain-aleph-hackaton/issues)
+
 
 ## 🙏 Acknowledgments
 
 - **OpenZeppelin** for secure smart contract libraries
 - **Next.js Team** for the amazing React framework
 - **Ethereum Foundation** for blockchain infrastructure
-- **Aleph Hackathon** organizers for this opportunity
+- **Crecimiento Argentina** organizers for this great opportunity
 
 ---
+
+## 🧭Next Steps & Future Functionalities
+- **Improve Speed, Scalability, Error Handling**: Improve performance.
+- **Money Withdraw**: Functionality to push money into the project and the functionality of thes small investor to redeem his profit.
+- **Tokens Second Market**: Allow Token holders to sell/buy sportchain tokens to other users in a secure platform.
+- **Credit card integration**: Integreate with Visa/Mastercard.
+
 
 **Built with ❤️ for the Aleph Hackathon 2025**
 
