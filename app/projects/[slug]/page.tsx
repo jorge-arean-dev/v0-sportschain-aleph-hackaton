@@ -1,3 +1,6 @@
+"use client"
+
+import { useState } from 'react'
 import { notFound } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -27,12 +30,40 @@ interface ProjectPageProps {
 
 export default function ProjectPage({ params }: ProjectPageProps) {
   const project = getProjectBySlug(params.slug)
+  const [showInvestModal, setShowInvestModal] = useState(false)
+  const [investmentAmount, setInvestmentAmount] = useState('')
+  const [isInvesting, setIsInvesting] = useState(false)
 
   if (!project) {
     notFound()
   }
 
   const fundingProgress = calculateFundingProgress(project)
+
+  const handleInvest = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsInvesting(true)
+    
+    try {
+      // Simulate investment processing
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      // Here you would typically call your smart contract or API
+      console.log(`Investing ${investmentAmount} in ${project.name}`)
+      
+      // Reset form and close modal
+      setInvestmentAmount('')
+      setShowInvestModal(false)
+      
+      // You could show a success message here
+      alert('Investment submitted successfully!')
+    } catch (error) {
+      console.error('Investment failed:', error)
+      alert('Investment failed. Please try again.')
+    } finally {
+      setIsInvesting(false)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -122,9 +153,63 @@ export default function ProjectPage({ params }: ProjectPageProps) {
               </Card>
             )}
 
-            <Button className="w-full" size="lg">
+            {/* Invest Now button opens a modal */}
+            <Button
+              size="lg"
+              className="btn-primary-filled flex w-full items-center gap-2"
+              onClick={() => setShowInvestModal(true)}
+            >
               Invest Now
             </Button>
+            
+            {showInvestModal && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+                <div className="bg-background rounded-lg shadow-lg p-8 max-w-md w-full relative">
+                  <button
+                    className="absolute top-2 right-2 text-muted-foreground hover:text-foreground"
+                    onClick={() => setShowInvestModal(false)}
+                    aria-label="Close"
+                  >
+                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                  <h2 className="text-xl font-bold mb-4">Invest in {project.name}</h2>
+                  {/* Simple investment form */}
+                  <form
+                    onSubmit={handleInvest}
+                    className="space-y-4"
+                  >
+                    <div>
+                      <label className="block text-sm font-medium mb-1" htmlFor="investmentAmount">
+                        Amount to Invest
+                      </label>
+                      <input
+                        id="investmentAmount"
+                        name="investmentAmount"
+                        type="number"
+                        min={project.minInvestment}
+                        step="100"
+                        required
+                        className="w-full border rounded px-3 py-2 bg-background text-foreground"
+                        value={investmentAmount}
+                        onChange={e => setInvestmentAmount(e.target.value)}
+                        placeholder={`Min: ${formatCurrency(project.minInvestment)}`}
+                      />
+                    </div>
+                    <a
+                      type="submit"
+                      href='/dashboard'
+                      className="btn-primary-filled w-full"
+                      
+                      onClick={() => setShowInvestModal(false)}
+                    >
+                      Confirm Investment
+                    </a>
+                  </form>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -286,7 +371,11 @@ export default function ProjectPage({ params }: ProjectPageProps) {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="btn-primary-filled">
+              <Button 
+                size="lg" 
+                className="btn-primary-filled"
+                onClick={() => setShowInvestModal(true)}
+              >
                 Invest Now
               </Button>
               <Button size="lg" variant="outline">

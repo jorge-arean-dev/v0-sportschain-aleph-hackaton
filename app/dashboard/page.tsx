@@ -1,4 +1,31 @@
+"use client"
+
+import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
+
+interface Project {
+  id: number
+  name: string
+  type: string
+  location: string
+  targetFunding: number
+  currentFunding: number
+  expectedROI: number
+  expectedIRR: number
+  minInvestment: number
+  description: string
+  image: string
+  status: string
+  startDate?: string
+  deadline?: string
+  initialInvestment: number
+  payoutsReceived: number
+  claimable: number
+  currentROI: number
+  currentIRR: number
+  tokenNumber: number
+  takenValue: number
+}
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
@@ -6,7 +33,7 @@ import { MapPin, TrendingUp, Users, Calendar, Euro, Wallet, Gift, BarChart3, Clo
 import MetricCard from "./metric-card"
 
 // Mock project data
-const projects = [
+const initialProjects = [
   {
     id: 1,
     name: "Elite Padel Club Lima",
@@ -22,7 +49,7 @@ const projects = [
     status: "Active",
     startDate: "2025-01-01",
     initialInvestment: 2500,
-    payoutsReceived: 1458,
+    payoutsReceived: 0,
     claimable: 1458,
     currentROI:-41.66,
     currentIRR: 31.25,
@@ -76,7 +103,7 @@ const projects = [
 ]
 
 // Mock transaction history
-const transactions = [
+const initialTransactions = [
   {
     id: 1,
     date: "2024-01-15",
@@ -135,14 +162,98 @@ const portfolioData = [
   { date: "Mar 15", value: 8150.00 },
 ]
 
-// Calculate dashboard metrics
-const totalInvested = projects.reduce((sum, project) => sum + project.initialInvestment, 0)
-const totalPayouts = projects.reduce((sum, project) => sum + project.payoutsReceived, 0)
-const currentValue = totalInvested + totalPayouts
-const claimableBalance = projects.reduce((sum, project) => sum + project.claimable, 0)
-const totalRealROI = ((totalPayouts - totalInvested)*100 / totalInvested).toFixed(2)
-
 export default function Dashboard() {
+  const [mounted, setMounted] = useState(false)
+  const [projects, setProjects] = useState<Project[]>(initialProjects)
+  const [transactions, setTransactions] = useState(initialTransactions)
+  const [showClaimModal, setShowClaimModal] = useState(false)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [isClaiming, setIsClaiming] = useState(false)
+  const [claimSuccess, setClaimSuccess] = useState(false)
+  const [claimedAmount, setClaimedAmount] = useState(0)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Don't render until component is mounted on client
+  if (!mounted) {
+    return null
+  }
+
+  // Calculate dashboard metrics
+  const totalInvested = projects.reduce((sum, project) => sum + project.initialInvestment, 0)
+  const totalPayouts = projects.reduce((sum, project) => sum + project.payoutsReceived, 0)
+  const currentValue = totalInvested + totalPayouts
+  const claimableBalance = projects.reduce((sum, project) => sum + project.claimable, 0)
+  const totalRealROI = ((totalPayouts - totalInvested)*100 / totalInvested).toFixed(2)
+
+  const handleClaimClick = (project: Project) => {
+    setSelectedProject(project)
+    setShowClaimModal(true)
+  }
+
+  const handleClaimConfirm = async () => {
+    if (!selectedProject) return
+    
+    setIsClaiming(true)
+    
+    try {
+      // Simulate claim processing
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      // Update the project data
+      const updatedProjects = projects.map(project => {
+        if (project.id === selectedProject.id) {
+          return {
+            ...project,
+            claimable: 0,
+            payoutsReceived: project.payoutsReceived + project.claimable
+          }
+        }
+        return project
+      })
+      
+             // Add new transaction
+       const newTransaction = {
+         id: transactions.length + 1,
+         date: new Date().toISOString().split('T')[0],
+         project: selectedProject.name,
+         action: "Claim",
+         amount: selectedProject.claimable,
+         txHash: `0x${Date.now().toString(16)}${selectedProject.id.toString(16)}...`,
+         type: "claim"
+       }
+      
+      setProjects(updatedProjects)
+      setTransactions([newTransaction, ...transactions])
+      
+      // Set success state and claimed amount
+      setClaimedAmount(selectedProject.claimable)
+      setClaimSuccess(true)
+      
+    } catch (error) {
+      console.error('Claim failed:', error)
+      alert('Claim failed. Please try again.')
+    } finally {
+      setIsClaiming(false)
+    }
+  }
+
+  const handleClaimCancel = () => {
+    setShowClaimModal(false)
+    setSelectedProject(null)
+    setClaimSuccess(false)
+    setClaimedAmount(0)
+  }
+
+  const handleCloseModal = () => {
+    setShowClaimModal(false)
+    setSelectedProject(null)
+    setClaimSuccess(false)
+    setClaimedAmount(0)
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-4 py-8">
@@ -247,7 +358,9 @@ export default function Dashboard() {
                       </td>
                      
                       <td className="py-4 px-4">
-                        <Button variant="outline">Claim</Button>
+                        <Button variant="outline" onClick={() => handleClaimClick(project)} disabled={isClaiming}>
+                          {isClaiming ? 'Claiming...' : 'Claim'}
+                        </Button>
                       </td>
                      
                     </tr>
@@ -324,6 +437,72 @@ export default function Dashboard() {
 
         <Button className="mb-8 mt-8">Simulate Time Skip</Button>
       </div>
+
+             {/* Claim Confirmation Modal */}
+       {showClaimModal && selectedProject && (
+         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+           <Card className="w-full max-w-md p-6">
+             {!claimSuccess ? (
+               <>
+                 <CardHeader>
+                   <CardTitle>Confirm Claim</CardTitle>
+                   <CardDescription>
+                     You are about to claim {selectedProject.name}. This action cannot be undone.
+                   </CardDescription>
+                 </CardHeader>
+                 <CardContent>
+                   <p>Amount to claim: <strong>${selectedProject.claimable.toLocaleString()}</strong></p>
+                   <p>Current Payouts Received: <strong>${totalPayouts.toLocaleString()}</strong></p>
+                   <p>New Payouts Received: <strong>${(totalPayouts + selectedProject.claimable).toLocaleString()}</strong></p>
+                   <p>Current Claimable Balance: <strong>${claimableBalance.toLocaleString()}</strong></p>
+                   <p>New Claimable Balance: <strong>$0</strong></p>
+                 </CardContent>
+                 <CardFooter className="flex justify-end space-x-2">
+                   <Button variant="outline" onClick={handleClaimCancel} disabled={isClaiming}>
+                     Cancel
+                   </Button>
+                   <Button onClick={handleClaimConfirm} disabled={isClaiming}>
+                     {isClaiming ? 'Claiming...' : 'Confirm Claim'}
+                   </Button>
+                 </CardFooter>
+               </>
+             ) : (
+               <>
+                 <CardHeader>
+                   <CardTitle className="text-green-600 flex items-center gap-2">
+                     <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                     </svg>
+                     Claim Successful!
+                   </CardTitle>
+                   <CardDescription>
+                     Your claim has been processed successfully
+                   </CardDescription>
+                 </CardHeader>
+                 <CardContent className="text-center space-y-4">
+                   <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
+                     <p className="text-lg font-semibold text-green-700 dark:text-green-300">
+                       ${claimedAmount.toLocaleString()}
+                     </p>
+                     <p className="text-sm text-green-600 dark:text-green-400">
+                       Successfully claimed from {selectedProject.name}
+                     </p>
+                   </div>
+                   <div className="text-sm text-muted-foreground">
+                     <p>Transaction has been added to your history</p>
+                     <p>Your portfolio has been updated</p>
+                   </div>
+                 </CardContent>
+                 <CardFooter className="flex justify-center">
+                   <Button onClick={handleCloseModal} className="w-full">
+                     Close
+                   </Button>
+                 </CardFooter>
+               </>
+             )}
+           </Card>
+         </div>
+       )}
     </div>
   )
 }

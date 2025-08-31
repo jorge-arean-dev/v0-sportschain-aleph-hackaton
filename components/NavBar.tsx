@@ -22,7 +22,7 @@ export default function NavBar() {
 
       <nav className="hidden md:flex items-center space-x-6"></nav>
       <div className="flex items-center space-x-6">
-        {isConnected && <a href="dashboard" className="btn-primary-outline text-muted-foreground hover:text-foreground transition-colors">Dashboard</a>}
+        {isConnected && <a href="/dashboard" className="btn-primary-outline text-muted-foreground hover:text-foreground transition-colors">Dashboard</a>}
         <ConnectButton />
 
       </div>
