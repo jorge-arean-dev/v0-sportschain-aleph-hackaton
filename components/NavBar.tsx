@@ -3,10 +3,14 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 import React from 'react'
 import { useRouter } from 'next/navigation' 
 import { useAccount } from "wagmi"
+import { EnsProfile } from './EnsProfile'
+
 export default function NavBar() {
-  
   const router = useRouter()
-  const {isConnected} = useAccount()
+  const { isConnected, address } = useAccount()
+  
+  // Temporary debugging - remove after testing
+  console.log('NavBar - isConnected:', isConnected, 'address:', address)
   
   return (
     <>
@@ -19,12 +23,10 @@ export default function NavBar() {
         </div>
         <span className="text-xl font-bold text-foreground">SportChain</span>
       </div>
-
-      <nav className="hidden md:flex items-center space-x-6"></nav>
       <div className="flex items-center space-x-6">
         {isConnected && <a href="/dashboard" className="btn-primary-outline text-muted-foreground hover:text-foreground transition-colors">Dashboard</a>}
+        {isConnected && <EnsProfile />}
         <ConnectButton />
-
       </div>
     </div>
   </header>
