@@ -74,10 +74,10 @@ contract SportsToken is ERC20, ERC20Burnable, ERC20Pausable, AccessControl, ERC2
         require(amount >= minimumInvestment, "Investment below minimum");
         require(saleStatus == SaleStatus.Active, "Sale not active");
         require(SportsChain(sportsChain).isWhitelisted(msg.sender), "Not whitelisted");
-        require(paymentToken.transferFrom(msg.sender, address(this), amount * unitPrice), "Transfer failed");
         if(amount + totalSold > supply) {
             amount = supply - totalSold;
         }
+        require(paymentToken.transferFrom(msg.sender, address(this), amount * unitPrice), "Transfer failed");
 
         _mint(msg.sender, amount);
         totalInvested += amount * unitPrice;

@@ -167,7 +167,7 @@ export function useContract(): UseContractReturn {
 
   // Read functions using useReadContract
   const isWhitelisted = (address: Address) => {
-    return useReadContract({
+    return writeContract({
       address: SPORTS_CHAIN_ADDRESS,
       abi: SportsChainABI.abi,
       functionName: "isWhitelisted",
@@ -176,13 +176,13 @@ export function useContract(): UseContractReturn {
   };
 
   const getSportsTokens = () => {
-    return useReadContract({
+    return writeContract({
       address: SPORTS_CHAIN_ADDRESS,
       abi: SportsChainABI.abi,
       functionName: "getSportsTokens"
     });
   };
-
+  
   // SportsToken Functions
   const investInToken = useCallback(async (tokenAddress: Address, amount: string) => {
     setInvestment({ loading: true });
@@ -261,7 +261,7 @@ export function useContract(): UseContractReturn {
   }, [writeContract]);
 
   const getTokenData = (tokenAddress: Address) => {
-    return useReadContract({
+    return writeContract({
       address: tokenAddress,
       abi: SportsTokenABI.abi,
       functionName: "getData",
@@ -270,7 +270,7 @@ export function useContract(): UseContractReturn {
 
   const getTokenBalance = (tokenAddress: Address, userAddress?: Address) => {
     const targetAddress = userAddress || address;
-    return useReadContract({
+    return writeContract({
       address: tokenAddress,
       abi: SportsTokenABI.abi,
       functionName: "balanceOf",

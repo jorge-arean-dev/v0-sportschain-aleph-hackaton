@@ -54,6 +54,10 @@ contract SportsChain is AccessControl {
         return address(sportsToken);
     }
 
+    function getSportsTokens() public view returns (address[] memory) {
+        return sportsTokens;
+    }
+
     function addToWhitelist() public {
         _grantRole(WHITELISTED, msg.sender);
         emit WhitelistAdded(msg.sender);

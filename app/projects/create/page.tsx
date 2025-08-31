@@ -33,8 +33,13 @@ export default function CreateProject() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const { uploadJson, uploadFile, fileUpload, jsonUpload } = usePinata()
-  const { deploySportsToken } = useSportsChain()
+  const { deploySportsToken, getSportsTokens } = useSportsChain()
   
+  const _getSportsTokens = async () => {
+    const tokens = await getSportsTokens()
+    console.log(tokens)
+  }
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({
@@ -132,6 +137,7 @@ export default function CreateProject() {
           <h1 className="text-3xl font-bold text-foreground mb-2">Create New Project</h1>
           <p className="text-muted-foreground">Launch your sports infrastructure investment opportunity</p>
         </div>
+        <Button onClick={_getSportsTokens}>Get Sports Tokens</Button>
         <form onSubmit={handleSubmit}>
           <Card className="max-w-4xl mx-auto">
             <CardHeader>
