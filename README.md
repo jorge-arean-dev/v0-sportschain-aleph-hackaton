@@ -1,4 +1,9 @@
-# 🏟️ SportChain - Aleph Hackathon 2025
+#  ⚽🎾SportChain - Aleph Hackathon 2025 
+
+<p align="center">
+  <img src="https://www.sportchain.io/_next/image?url=%2Fsportchain_isotipo.png&w=96&q=75" alt="SportChain Logo" width="120" />
+</p>
+
 
 > **Tokenize and democratize sports infrastructure investment through blockchain technology**
 
